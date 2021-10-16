@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="" class="has-background-black-bis has-text-primary-light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Instagram Dev!</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/png" href='https://img.icons8.com/dusk/50/000000/instagram.png'
+          style="width: 40px;height: 40px">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+</head>
+<body class="has-background-black-bis has-text-primary-light">
+
+<nav class="navbar is-link" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="">
+            <img src="https://img.icons8.com/dusk/50/000000/instagram.png" width="40" height="43" alt="">
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+           data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a href="{% url 'myfriend' %}" class="navbar-item">
+                <i class="material-icons">home_work</i>
+                My Friend
+            </a>
+
+            <a href="{% url 'search' %}" class="navbar-item">
+                <i class="material-icons">travel_explore</i>
+                Search
+            </a>
+
+            <a href="{% url 'profile' request.user %}" class="navbar-item">
+                <i class="material-icons">engineering</i>
+                Profile - <strong>{{ request.user }}</strong>
+            </a>
+
+            <a href="{% url 'newpost' %}" class="navbar-item">
+                <i style="color: #fa7c91;" class="material-icons">add_photo_alternate</i>
+                <strong>New Post</strong>
+            </a>
+
+
+            <div class="navbar-item has-dropdown is-hoverable" >
+                <a class="navbar-link">
+                    More
+                </a>
+
+                <div class="navbar-dropdown" >
+                    <a href="{% url 'edit-profile' %}" class="navbar-item">
+                           Edit Profile
+                    </a>
+                    <a href="{% url 'change_password' %}" class="navbar-item">
+                        Change password
+                    </a>
+                    <a href="{% url 'password_reset' %}" class="navbar-item is-loading">
+                        Password reset
+                    </a>
+
+                    <hr class="navbar-divider ">
+                    <a href="{% url 'logout' %}" class="navbar-item has-background-white-ter">
+                        Log out
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-info" href="{% url 'signup' %}" class="navbar-item">
+{#              <a href="{% url 'signup' %}" class="navbar-item">#}
+            <strong>Sign up</strong>
+          </a>
+          <a class="button is-light" href="{% url 'login' %}" class="navbar-item">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
+
+    </div>
+</nav>
+
+{% block banner %}
+{% endblock %}
+
+<section class="section">
+    <div class="container">
+
+        {% block content %}
+
+        {% endblock %}
+
+
+        {% block pagination %}
+        {% endblock %}
+
+    </div>
+</section>
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static 'js/init.js' %}"></script>
+<script src="{% static 'js/slider.js' %}"></script>
+</html>
