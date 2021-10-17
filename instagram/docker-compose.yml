@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  django_instagram:
+    build: .
+    command: >
+      ash -c "python manage.py migrate && gunicorn instagram.wsgi:application --bind 0.0.0.0:4020"
+    volumes:
+      - static:/app/static
+      - media:/app/media
+      - .:/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres_db
+  postgres_db:
+    image: postgres:14.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=mehrdad
+      - POSTGRES_PASSWORD=123123
+      - POSTGRES_DB=instagram
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/app/static
+      - media:/app/media
+    ports:
+      - 4030:80
+    depends_on:
+      - django_instagram
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_val:/data
+#   celery:
+#     restart: always
+#     build:
+#       context: .
+# #      dockerfile: dokckerfile-name-alternative
+# #      args:
+# #        name : ashkan
+#     command: >
+#       ash -c "touch celery.log && touch celery_beat.log && celery -A instagram worker -l info &> celery.log & celery -A instagram beat -l info -S django &> celery_beat.log"
+#     volumes:
+#       - .:/app
+#     depends_on:
+#       - django_instagram
+#       - redis
+volumes:
+  postgres_data:
+  static:
+  media:
+  redis_val:
